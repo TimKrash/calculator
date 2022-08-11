@@ -25,12 +25,12 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
     justify-content: flex-end;
     background-color: #f9f5fa;
     width: 90%;
-    height: 5em;
+    height: 7em;
 }
 
 .reset {
@@ -43,7 +43,7 @@ body {
 
 .clear, .delete {
     width: 200px; 
-    padding: 1rem;
+    padding: .5rem;
 }
 
 .clear {
