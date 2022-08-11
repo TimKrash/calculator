@@ -76,11 +76,14 @@ body {
     padding: 1rem;
 }
 
+.button, .clear, .delete, .display {
+    border: 2px solid #5e5e5e;
+}
+
 .button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid #5e5e5e;
     box-sizing: border-box;
     width: 6rem;
     background-color: #f9f5fa;
