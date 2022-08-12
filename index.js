@@ -24,7 +24,14 @@ let displayBottom = document.querySelector('.text.bottom');
 const add = (a, b) => parseFloat(a) + parseFloat(b);
 const subtract = (a, b) => parseFloat(a) - parseFloat(b);
 const multiply = (a, b) => parseFloat(a) * parseFloat(b);
-const divide = (a, b) => parseFloat(a) / parseFloat(b);
+const divide = (a, b) => {
+    if (b == 0) {
+        alert("Hey c'mon, why you tryna divide by 0");
+        clearCalculator();
+        return null;
+    }
+    return parseFloat(a) / parseFloat(b);
+}
 
 /**
  * 
@@ -60,12 +67,6 @@ const display = (e) => {
 }
 
 const queueOperation = (e) => {
-    // Push existing display value to queue and then set to null
-    if (displayValue) {
-        displayQueue.push(displayValue);
-        displayValue = null;
-    }
-
     let operator = e.target.textContent;
     switch (operator) {
         case "+":
@@ -86,6 +87,15 @@ const queueOperation = (e) => {
             break;
     }
 
+    if (!(displayQueue.some(val => Object.values(Operators).includes(val))) && operator === Operators.Equals) {
+        return;
+    }
+
+    if (displayValue) {
+        displayQueue.push(displayValue);
+        displayValue = null;
+    }
+
     if (displayQueue.length == 2) {
         displayQueue[1] = operator
     } else {
@@ -99,12 +109,14 @@ const queueOperation = (e) => {
         let numTwo = displayQueue[2];
 
         let answer = operate(initOperator, numOne, numTwo);
+        if (!answer) {
+            return;
+        }
         if (nextOperator === Operators.Equals) {
             displayTop.textContent = displayQueue.join(' ');
             displayBottom.textContent = answer;
             displayQueue.splice(0, 4, answer.toString());
         } else {
-            console.log(displayQueue);
             displayQueue.splice(0, 3, answer.toString());
             displayTop.textContent = displayQueue.join(' ');
             displayBottom.textContent = answer;
@@ -117,14 +129,14 @@ const queueOperation = (e) => {
 }
 
 // Clear and delete logic
-const clearCalculator = (e) => {
+const clearCalculator = () => {
    displayTop.textContent = null;
    displayBottom.textContent = 0;
    displayQueue = []; 
    displayValue = 0;
 }
 
-const deleteEntry = (e) => {
+const deleteEntry = () => {
     if (displayValue === "0" || !displayValue) {
         return;
     }
