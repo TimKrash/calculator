@@ -23,6 +23,7 @@ body {
 
 .display {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
     margin-top: 1.5rem;
@@ -30,7 +31,7 @@ body {
     justify-content: flex-end;
     background-color: #f9f5fa;
     width: 90%;
-    height: 7em;
+    height: 6em;
 }
 
 .reset {
@@ -56,14 +57,21 @@ body {
 
 .text {
     font-weight: 800;
-    font-size: 36px;
     text-align: center;
     color: #5e5e5e;
 }
 
 .display .text {
-    font-size: 44px;
+    font-size: 48px;
     padding-right: 1rem;
+}
+
+.clear .text, .delete .text {
+    font-size: 36px;
+}
+
+.text.top {
+    font-size: 28px;
 }
 
 /* Main part*/
