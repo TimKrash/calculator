@@ -114,15 +114,18 @@ const queueOperation = (e) => {
         }
         if (nextOperator === Operators.Equals) {
             displayTop.textContent = displayQueue.join(' ');
+            displayTop.style.opacity = 1;
             displayBottom.textContent = answer;
             displayQueue.splice(0, 4, answer.toString());
         } else {
             displayQueue.splice(0, 3, answer.toString());
             displayTop.textContent = displayQueue.join(' ');
+            displayTop.style.opacity = 1;
             displayBottom.textContent = answer;
         }
     } else {
         displayTop.textContent = displayQueue.join(' ');
+        displayTop.style.opacity = 1;
         displayBottom.textContent = displayQueue[0];
     }
 
