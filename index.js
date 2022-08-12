@@ -21,10 +21,10 @@ let displayTop = document.querySelector('.text.top');
 let displayBottom = document.querySelector('.text.bottom');
 
 
-const add = (a, b) => parseInt(a) + parseInt(b);
-const subtract = (a, b) => parseInt(a) - parseInt(b);
-const multiply = (a, b) => parseInt(a) * parseInt(b);
-const divide = (a, b) => parseInt(a) / parseInt(b);
+const add = (a, b) => parseFloat(a) + parseFloat(b);
+const subtract = (a, b) => parseFloat(a) - parseFloat(b);
+const multiply = (a, b) => parseFloat(a) * parseFloat(b);
+const divide = (a, b) => parseFloat(a) / parseFloat(b);
 
 /**
  * 
@@ -121,11 +121,11 @@ const clearCalculator = (e) => {
    displayTop.textContent = null;
    displayBottom.textContent = 0;
    displayQueue = []; 
+   displayValue = 0;
 }
 
 const deleteEntry = (e) => {
     if (displayValue === "0" || !displayValue) {
-        displayValue === "0";
         return;
     }
 
@@ -136,19 +136,37 @@ const deleteEntry = (e) => {
     displayBottom.textContent = displayValue;
 }
 
+// Decimal
+const handleDecimal = (e) => {
+    if (!displayValue) {
+        displayValue = "0";
+    }
+
+    if (displayValue.includes(".")) {
+        return;
+    }
+
+    displayValue += ".";
+    displayBottom.textContent = displayValue;
+}
+
 // Button event listeners
 let numberButtons = calcButtons.filter(button => {
     return button.className.toLowerCase().indexOf("multiply") === -1 &&
     button.className.toLowerCase().indexOf("divide") === -1 && button.className.toLowerCase().indexOf("subtract") === -1 &&
-    button.className.toLowerCase().indexOf("add") === -1 && button.className.toLowerCase().indexOf("equals") === -1;
+    button.className.toLowerCase().indexOf("add") === -1 && button.className.toLowerCase().indexOf("equals") === -1 &&
+    button.className.toLowerCase().indexOf("dot") === -1;
 })
 let operatorButtons = calcButtons.filter(button => {
     return button.className.includes("multiply") || button.className.includes("divide") ||
     button.className.includes("equals") || button.className.includes("subtract") || button.className.includes("add");
 })
 
+let decimalButtons = calcButtons.filter(button => button.className.includes("dot"));
+
 numberButtons.forEach(button => button.addEventListener('click', display));
 operatorButtons.forEach(button => button.addEventListener('click', queueOperation));
+decimalButtons.forEach(button => button.addEventListener('click', handleDecimal));
 
 clearButton.addEventListener('click', clearCalculator);
 deleteButton.addEventListener('click', deleteEntry);

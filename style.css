@@ -48,7 +48,7 @@ body {
 }
 
 .clear {
-    background-color: #fccae1
+    background-color: #fccae1;
 }
 
 .delete {
@@ -97,6 +97,22 @@ body {
     background-color: #f9f5fa;
     font-size: 36px;
     font-weight: 800;
+}
+
+.button:hover, .clear:hover, .delete:hover {
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #E0DCE1;
+}
+
+.clear:hover {
+    background-color: #E2B5CA;
+}
+
+.delete:hover {
+    background-color: #B8B5E2;
 }
 
 .footer {
