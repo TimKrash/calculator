@@ -31,7 +31,9 @@ body {
     justify-content: flex-end;
     background-color: #f9f5fa;
     width: 90%;
-    height: 6em;
+    min-height: 6em;
+    box-sizing: border-box;
+    overflow: auto;
 }
 
 .reset {
@@ -70,8 +72,19 @@ body {
     font-size: 36px;
 }
 
+.text.top, .text.bottom {
+    flex: 1;
+    text-align: end;
+    max-width: 90%;
+    word-wrap: break-word;
+    font-size: 44px;
+}
+
 .text.top {
-    font-size: 28px;
+    flex-shrink: 0;
+    position: relative;
+    font-size: 30px;
+    opacity: 0;
 }
 
 /* Main part*/
