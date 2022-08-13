@@ -52,22 +52,19 @@ const operate = (operator, numOne, numTwo) => {
     }
 }
 
-/**
- * 
- * @param {Event} e 
- */
-const display = (e) => {
+
+const display = (content) => {
     if (displayValue === "0" || !displayValue) {
-        displayValue = e.target.textContent;
+        displayValue = content;
     } else {
-        displayValue += e.target.textContent;
+        displayValue += content;
     }
 
     displayBottom.textContent = displayValue;
 }
 
-const queueOperation = (e) => {
-    let operator = e.target.textContent;
+const queueOperation = (content) => {
+    let operator = content;
     switch (operator) {
         case "+":
             operator = Operators.Add;
@@ -78,6 +75,12 @@ const queueOperation = (e) => {
         case "&times;":
             operator = Operators.Multiply;
             break;
+        case "*":
+            operator = Operators.Multiply;
+            break;
+        case "/":
+            operator = Operators.Divide;
+            break;
         case "&#247;":
             operator = Operators.Divide;
             break;
@@ -85,6 +88,10 @@ const queueOperation = (e) => {
             operator = Operators.Equals;
             displayTop.textContent = displayQueue.join(' ');
             break;
+        case "Enter":
+            operator = Operators.Equals;
+            displayTop.textContent = displayQueue.join(' ');
+            break; 
     }
 
     if (!(displayQueue.some(val => Object.values(Operators).includes(val))) && operator === Operators.Equals) {
@@ -136,7 +143,7 @@ const clearCalculator = () => {
    displayTop.textContent = null;
    displayBottom.textContent = 0;
    displayQueue = []; 
-   displayValue = 0;
+   displayValue = "0";
 }
 
 const deleteEntry = () => {
@@ -152,7 +159,7 @@ const deleteEntry = () => {
 }
 
 // Decimal
-const handleDecimal = (e) => {
+const handleDecimal = () => {
     if (!displayValue) {
         displayValue = "0";
     }
@@ -163,6 +170,22 @@ const handleDecimal = (e) => {
 
     displayValue += ".";
     displayBottom.textContent = displayValue;
+}
+
+const handleNumberContent = (e) => display(e.target.textContent);
+const handleOperatorContent = (e) => queueOperation(e.target.textContent);
+
+let keyCodes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+let operationCodes = [13, 56, 191, 187, 189]
+let dotCode = [190];
+const handleKeyDown = (e) => {
+    if (keyCodes.includes(e.which) && !e.shiftKey) {
+        display(e.key);
+    } else if (operationCodes.includes(e.which)) {
+        queueOperation(e.key);
+    } else if (dotCode.includes(e.which)) {
+        handleDecimal(e.key);
+    }
 }
 
 // Button event listeners
@@ -179,9 +202,12 @@ let operatorButtons = calcButtons.filter(button => {
 
 let decimalButtons = calcButtons.filter(button => button.className.includes("dot"));
 
-numberButtons.forEach(button => button.addEventListener('click', display));
-operatorButtons.forEach(button => button.addEventListener('click', queueOperation));
+numberButtons.forEach(button => button.addEventListener('click', handleNumberContent));
+operatorButtons.forEach(button => button.addEventListener('click', handleOperatorContent));
 decimalButtons.forEach(button => button.addEventListener('click', handleDecimal));
 
 clearButton.addEventListener('click', clearCalculator);
 deleteButton.addEventListener('click', deleteEntry);
+
+// Keyboard event listeners
+window.addEventListener('keydown', handleKeyDown);
